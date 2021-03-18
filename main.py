@@ -1,5 +1,6 @@
 from sportsreference.ncaab.teams import Teams
 import time
+import datetime
 import data
 import discord
 from discord.ext.commands import bot
@@ -13,6 +14,9 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
+    def timegrabber():
+        currenttime = time.time_ns()
+        return currenttime
     while True:
 
         channel = client.get_channel(data.channel)
@@ -31,8 +35,15 @@ async def on_ready():
             return teamwins
 
         oldarray = datagather()
-        await asyncio.sleep(300)
-        newarray = datagather()
+        now = timegrabber()
+        toggle = 0
+        while toggle == 0:
+            later = timegrabber()
+            if later - now > 900000000000:
+                print(datetime.datetime.now().strftime('%b-%d-%I%M%p-%G'))
+                newarray = datagather()
+                toggle = 1
+        
 
         list_difference = []
         for item in oldarray:
