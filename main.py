@@ -5,6 +5,7 @@ import discord
 from discord.ext.commands import bot
 from discord.ext import commands
 from discord.ext import tasks
+import asyncio
 
 token = data.token
 client = discord.Client()
@@ -30,7 +31,7 @@ async def on_ready():
             return teamwins
 
         oldarray = datagather()
-        time.sleep(300)
+        await asyncio.sleep(300)
         newarray = datagather()
 
         list_difference = []
